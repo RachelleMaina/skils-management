@@ -1,0 +1,126 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --grey-1: rgb(249, 249, 249);
+  --grey-2: #d9d9d9;
+  --grey-3: #6b6b6b;
+
+  --black-1: #000;
+  --black-2: #242424;
+
+  --brand: #4bde99;
+  --brand-light: #bae7ca;
+
+  --off-white: #f9f9f9;
+
+  --danger: rgb(205, 50, 52);
+  --danger-light: rgba(205, 50, 52, 0.2);
+  --success: rgb(18, 183, 106);
+  --success-light: rgba(18, 183, 106, 0.2);
+  --warning: rgb(255, 191, 0);
+  --warning-light: rgba(255, 191, 0, 0.2);
+}
+
+/* * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+} */
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url('./assets/fonts/Axiforma/Light.otf');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url('./assets/fonts/Axiforma/Regular.otf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url('./assets/fonts/Axiforma/Medium.otf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url('./assets/fonts/Axiforma/SemiBold.otf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url('./assets/fonts/Axiforma/Bold.otf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url('./assets/fonts/Axiforma/ExtraBold.otf');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url('./assets/fonts/Axiforma/Black.otf');
+  font-weight: 900;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Axiforma', sans-serif !important;
+  color: var(--black-1);
+  background-color: var(--off-white);
+  font-size: 14px;
+  font-weight: 400;
+}
+.ant-form-item {
+  margin-bottom: 14px !important;
+}
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+.user {
+  display: flex;
+
+  align-items: center;
+  gap: 5px;
+}
+.username {
+  color: var(--grey-3);
+  font-size: 12px;
+  font-weight: 500;
+}
+.role {
+  background-color: var(--brand);
+  color: #000;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 0px 8px;
+  text-transform: capitalize;
+}
+.publish_btn {
+  border: none;
+  background-color: #f6c244;
+  border-radius: 4px;
+  padding: 10px;
+}
