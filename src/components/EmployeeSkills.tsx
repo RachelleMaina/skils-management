@@ -16,7 +16,7 @@ interface Props {
 }
 
 const EmployeeSkills = ({ reload }: Props) => {
-  const [{ employee_skills, filtered_skills }, dispatch] = useStateProvider();
+  const [{employee_skills, filtered_skills }, dispatch] = useStateProvider();
   const [showModal, setshowModal] = useState(false);
   const [title, setTitle] = useState('Add Skill');
   const [initialValues, setInitialValues] = useState<any>({
@@ -54,11 +54,11 @@ const EmployeeSkills = ({ reload }: Props) => {
   const handleDelete = () => {
     if (selectedSkill) {
       //find skill with given id
-      const index = employee_skills.findIndex(
+      const index =employee_skills.findIndex(
         (item: { id: number }) => item.id === selectedSkill.id
       );
 
-      const allSkills = [...employee_skills];
+      const allSkills = [...sm_employee_skills];
       //delete skill
       if (index > -1) {
         allSkills.splice(index, 1);
@@ -74,10 +74,10 @@ const EmployeeSkills = ({ reload }: Props) => {
     if (tag.name === 'All Skills') {
       dispatch({
         type: reducerCases.SET_FILTERED_SKILLS,
-        filtered_skills: employee_skills,
+        filtered_skills:employee_skills,
       });
     } else {
-      const filtered_skills = employee_skills.filter((sk: any) =>
+      const filtered_skills =employee_skills.filter((sk: any) =>
         sk.tags.includes(tag.name)
       );
       dispatch({
@@ -91,7 +91,7 @@ const EmployeeSkills = ({ reload }: Props) => {
     setSelectedSkill(skill);
     setShowDeleteAlert(true);
   };
-
+console.log(employee_skills)
   return (
     <>
       <Container>

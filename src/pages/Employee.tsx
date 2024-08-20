@@ -10,22 +10,25 @@ const Employee = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, dispatch] = useStateProvider();
 
-  const reload = () => {
-    setKey((key) => key + 1);
-  };
 
   useEffect(() => {
     const skillsStr = localStorage.getItem('sm_employee_skills');
     const skills = skillsStr ? JSON.parse(skillsStr) : [];
+    console.log(skills, ">>>")
     dispatch({
       type: reducerCases.SET_EMPLOYEE_SKILLS,
-      skills,
+     employee_skills:skills,
     });
     dispatch({
       type: reducerCases.SET_FILTERED_SKILLS,
       filtered_skills: skills,
     });
   }, [key]);
+
+  const reload = () => {
+    setKey((key) => key + 1);
+  };
+
 
   return (
     <Container>
