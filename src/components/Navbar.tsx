@@ -66,7 +66,7 @@ const Navbar = () => {
   return (
     <>
       <Container>
-        <div className="left__items">
+        <div className="left__items" onClick={()=>navigate("/")}>
           <Icon
             icon="token:card"
             style={{ color: 'var(--brand)', fontSize: '32px' }}
@@ -74,11 +74,12 @@ const Navbar = () => {
           <span className="company">My Company</span>
         </div>
         <div className="right__items">
-          <div className="publish__profile">
+          {user?.role === "employee" ?  <div className="publish__profile">
             <button className="publish_btn" onClick={() => setshowModal(true)}>
               Publish Profile
             </button>
-          </div>
+          </div> :null}
+        
 
           <Dropdown
             menu={{ items }}

@@ -68,8 +68,8 @@ const Signup = () => {
               }
               options={[
                 { value: 'employee', label: 'Employee' },
-                { value: 'hr_manager', label: 'HR Manager' },
-                { value: 'line_manager', label: 'Line Manager' },
+                { value: 'hr manager', label: 'HR Manager' },
+                { value: 'line manager', label: 'Line Manager' },
               ]}
               onChange={(value: any) => form.setFieldsValue({ skill: value })}
               suffixIcon={

@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import EmployeeSkills from '../components/EmployeeSkills';
 import { useState, useEffect } from 'react';
 import { useStateProvider } from '../utils/StateProvider';
 import { reducerCases } from '../utils/constants';
+import AllSkills from '../components/AllSkills';
 
-
-const Employee = () => {
+const Manager = () => {
   const [key, setKey] = useState(1);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -40,10 +39,10 @@ const Employee = () => {
 
   return (
     <Container>
-      <EmployeeSkills reload={reload} tableKey={key} />
-  
+
+      <AllSkills reload={reload} tableKey={ key} />
     </Container>
   );
 };
 const Container = styled.div``;
-export default Employee;
+export default Manager;

@@ -12,6 +12,8 @@ import { reducerCases } from '../utils/constants';
 import DeleteAlert from './DeleteAlert';
 import DataTable from './Table';
 import { ColumnsType } from 'antd/es/table';
+import AddNewSkill from './AddNewSkill';
+import { useNavigate } from 'react-router';
 
 interface Props {
   reload: () => void;
@@ -19,7 +21,7 @@ interface Props {
 }
 
 const EmployeeSkills = ({ reload, tableKey }: Props) => {
-  const [{employee_skills, filtered_skills }, dispatch] = useStateProvider();
+  const [{ all_skills, filtered_skills }, dispatch] = useStateProvider();
   const [showModal, setshowModal] = useState(false);
   const [title, setTitle] = useState('Add Skill');
   const [initialValues, setInitialValues] = useState<any>({
@@ -34,6 +36,9 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
   const [action, setAction] = useState('');
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
+  const [selectedSkills, setSelectedSkills] = useState<any>([]);
+
+  const navigate = useNavigate()
  
 
   const handleAdd = () => {
@@ -58,17 +63,17 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
   const handleDelete = () => {
     if (selectedSkill) {
       //find skill with given id
-      const index =employee_skills.findIndex(
+      const index = all_skills.findIndex(
         (item: { id: number }) => item.id === selectedSkill.id
       );
 
-      const allSkills = [...employee_skills];
+      const allSkills = [...all_skills];
       //delete skill
       if (index > -1) {
         allSkills.splice(index, 1);
       }
 
-      localStorage.setItem('sm_employee_skills', JSON.stringify(allSkills));
+      localStorage.setItem('sm_all_skills', JSON.stringify(allSkills));
       reload();
       setShowDeleteAlert(false);
     }
@@ -78,10 +83,10 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
     if (tag.name === 'All Skills') {
       dispatch({
         type: reducerCases.SET_FILTERED_SKILLS,
-        filtered_skills:employee_skills,
+        filtered_skills: all_skills,
       });
     } else {
-      const filtered_skills =employee_skills.filter((sk: any) =>
+      const filtered_skills = all_skills.filter((sk: any) =>
         sk.tags.includes(tag.name)
       );
       dispatch({
@@ -90,6 +95,8 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
       });
     }
   };
+
+  const handleTag = () =>{}
 
   const onDelete = (skill: Skill) => {
     setSelectedSkill(skill);
@@ -106,22 +113,7 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
         <span>{name || '-'}</span>
       ),
     },
-    {
-      title: 'Proficiency',
-      dataIndex: 'proficiency',
-      key: 'proficiency',
-      render: (proficiency) => (
-        <Rate value={proficiency} className="rating" />
-      ),
-    },
-    {
-      title: 'Tags',
-      dataIndex: 'tags',
-      key: 'tags',
-      render: (_,skill) => (
-        <SkillTags skill={skill} />
-      ),
-    },
+
 
     {
       title: 'Action',
@@ -164,19 +156,20 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
       <Container>
         <div className="table__header">
           <div className="top">
-          <div className="page_title"><span>My Skills</span></div>
-          <div className="cta_actions">
-            <Button onClick={handlePropose}>Propose Skill</Button>
+          <div className="page_title"><span>All Skills</span></div>
+            <div className="cta_actions">
+              {selectedSkills?.length > 0 &&   <Button onClick={handleTag}>Tag Skills</Button>}
+            <Button onClick={()=>navigate("/proposed-skills")}>Review Proposed Skills</Button>
             <Button onClick={handleAdd} type="primary">
               Add Skill
             </Button>
           </div>
           </div>
-          {employee_skills?.length > 0 && (
+          {/* {all_skills?.length > 0 && (
             <SkillsBanner handleFilter={handleFilter} />
-          )}
+          )} */}
         </div>
-        {employee_skills ? (
+        {all_skills ? (
           <div className="skills_table">
             <div className="sub_header">
               <Select
@@ -209,9 +202,9 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
             <DataTable<Skill>
         tableKey={tableKey}
         columns={columns}
-        data={filtered_skills}
-        getActiveRecord={(record) => setSelectedSkill(record)}
-      
+        data={all_skills}
+        getSelectedRecords={(records) => setSelectedSkills(records)}
+      selectable={true}
       />
         
           </div>
@@ -246,7 +239,7 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
         />
       )}
 
-      <SkillModal
+      <AddNewSkill
         open={showModal}
         close={() => setshowModal(false)}
         title={title}

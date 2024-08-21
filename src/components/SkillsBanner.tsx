@@ -7,28 +7,28 @@ const SkillsBanner = ({
 }: {
   handleFilter: (tag: any) => void;
 }) => {
-  const [{  all_skills }] = useStateProvider();
+  const [{  employee_skills }] = useStateProvider();
   const skill_tags = [
     {
       name: 'All Skills',
-      count:  all_skills.length,
+      count:  employee_skills.length,
     },
     {
       name: 'Good At',
-      count:  all_skills.filter((skill: { tags: string | string[] }) =>
-        skill.tags.includes('Good At')
+      count:  employee_skills.filter((skill: { tags: string | string[] }) =>
+        skill.tags?.includes('Good At')
       )?.length,
     },
     {
       name: 'Needs Training',
-      count:  all_skills.filter((skill: { tags: string | string[] }) =>
-        skill.tags.includes('Needs Training')
+      count:  employee_skills.filter((skill: { tags: string | string[] }) =>
+        skill.tags?.includes('Needs Training')
       )?.length,
     },
     {
       name: 'Can Couch',
-      count:  all_skills.filter((skill: { tags: string | string[] }) =>
-        skill.tags.includes('Can Couch')
+      count:  employee_skills.filter((skill: { tags: string | string[] }) =>
+        skill.tags?.includes('Can Couch')
       )?.length,
     },
   ];

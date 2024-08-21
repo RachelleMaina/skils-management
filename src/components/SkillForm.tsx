@@ -12,6 +12,7 @@ import {
 import { Store } from 'antd/es/form/interface';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useStateProvider } from '../utils/StateProvider';
 
 interface Props {
   form: FormInstance<any>;
@@ -27,6 +28,7 @@ export interface ProposesSkills {
 const SkillsForm = ({ form, onSubmit, initialValues, action }: Props) => {
   const [name, setName] = useState('');
   const inputRef = useRef<InputRef>(null);
+  const [{ all_skills }] = useStateProvider();
 
   useEffect(() => {
     if (initialValues) {
@@ -119,11 +121,7 @@ const SkillsForm = ({ form, onSubmit, initialValues, action }: Props) => {
                                     (optionB?.label ?? '').toLowerCase()
                                   )
                               }
-                              options={[
-                                { value: 'JavaScript', label: 'JavaScript' },
-                                { value: 'TypeScript', label: 'TypeScript' },
-                                { value: 'Next.js', label: 'Next.js' },
-                              ]}
+                              options={all_skills.map((skill: { skill: any; })=> ({ value: skill.skill, label: skill.skill }))}
                               onChange={(value: any) =>
                                 form.setFieldsValue({ skill: value })
                               }

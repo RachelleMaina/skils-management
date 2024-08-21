@@ -60,7 +60,7 @@ const PublishProfile = ({ open, close, initialValues }: Props) => {
               name={'visible_to'}
               label="Publish to"
               rules={[{ required: true }]}
-              style={{ width: '100%' }}
+     
             >
               <Select
                 mode="multiple"

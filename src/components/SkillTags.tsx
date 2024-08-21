@@ -36,13 +36,12 @@ const SkillTags = ({ skill }: { skill: Skill }) => {
   return (
     <div
       style={{
-        margin: '10px 0',
         display: 'flex',
         gap: '5px',
         flexWrap: 'wrap',
       }}
     >
-      <div style={{ height: '35px' }}>{tagChild}</div>
+      <div>{tagChild}</div>
       {tags.length < 3 ? (
         <Select
           style={{ minWidth: 130, height: 28 }}

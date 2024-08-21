@@ -1,24 +1,21 @@
 import { Icon } from '@iconify/react';
 import { Button, Empty, Rate, Select, Typography } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Skill } from '../types';
 import { useStateProvider } from '../utils/StateProvider';
-import SearchInput from './SearchInput';
-import SkillModal from './SkillModal';
-import SkillTags from './SkillTags';
-import SkillsBanner from './SkillsBanner';
 import { reducerCases } from '../utils/constants';
-import DeleteAlert from './DeleteAlert';
-import DataTable from './Table';
 import { ColumnsType } from 'antd/es/table';
+import DataTable from '../components/Table';
+import SkillModal from '../components/SkillModal';
+import DeleteAlert from '../components/DeleteAlert';
 
 interface Props {
   reload: () => void;
   tableKey:number
 }
 
-const EmployeeSkills = ({ reload, tableKey }: Props) => {
+const ProposedSkills = ({ reload, tableKey }: Props) => {
   const [{employee_skills, filtered_skills }, dispatch] = useStateProvider();
   const [showModal, setshowModal] = useState(false);
   const [title, setTitle] = useState('Add Skill');
@@ -34,7 +31,14 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
   const [action, setAction] = useState('');
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
+  const [proposedSkills,    setProposedSkills]=useState<any>()
  
+  useEffect(() => {
+ 
+    const all_skills_str = localStorage.getItem('sm_proposed_skills');
+    const all_skills = all_skills_str ? JSON.parse(all_skills_str) : [];
+   setProposedSkills(all_skills)
+  }, []);
 
   const handleAdd = () => {
     setTitle('Add Skill');
@@ -106,22 +110,15 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
         <span>{name || '-'}</span>
       ),
     },
-    {
-      title: 'Proficiency',
-      dataIndex: 'proficiency',
-      key: 'proficiency',
-      render: (proficiency) => (
-        <Rate value={proficiency} className="rating" />
-      ),
-    },
-    {
-      title: 'Tags',
-      dataIndex: 'tags',
-      key: 'tags',
-      render: (_,skill) => (
-        <SkillTags skill={skill} />
-      ),
-    },
+ 
+    // {
+    //   title: 'Tags',
+    //   dataIndex: 'tags',
+    //   key: 'tags',
+    //   render: (_,skill) => (
+    //     <SkillTags skill={skill} />
+    //   ),
+    // },
 
     {
       title: 'Action',
@@ -132,27 +129,37 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
         <div
           style={{
             display: 'flex',
-            gap: '8px',
+            gap: '15px',
             cursor: 'pointer',
           }}
         >
-          <div onClick={() => handleEdit(skill)}>
+          <div onClick={() => handleEdit(skill)}    style={{
+            display: 'flex',
+            alignItems:"flex-start",
+            gap: '8px',
+            cursor: 'pointer',
+          }}>
             <Icon
-              icon="la:edit"
+              icon="carbon:checkmark-outline"
               style={{
                 color: 'var(--grey-3)',
                 fontSize: '16px',
               }}
-            />
+            /> Approve
           </div>
-          <div onClick={() => onDelete(skill)}>
+          <div onClick={() => onDelete(skill)} style={{
+            display: 'flex',
+            alignItems:"flex-start",
+            gap: '8px',
+            cursor: 'pointer',
+          }}>
             <Icon
               icon="dashicons:trash"
               style={{
                 color: 'var(--grey-3)',
                 fontSize: '16px',
               }}
-            />
+            /> Reject
           </div>
         </div>
       ),
@@ -164,21 +171,21 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
       <Container>
         <div className="table__header">
           <div className="top">
-          <div className="page_title"><span>My Skills</span></div>
-          <div className="cta_actions">
+          <div className="page_title"><span>Proposed Skills</span></div>
+          {/* <div className="cta_actions">
             <Button onClick={handlePropose}>Propose Skill</Button>
             <Button onClick={handleAdd} type="primary">
               Add Skill
             </Button>
+          </div> */}
           </div>
-          </div>
-          {employee_skills?.length > 0 && (
+          {/* {employee_skills?.length > 0 && (
             <SkillsBanner handleFilter={handleFilter} />
-          )}
+          )} */}
         </div>
         {employee_skills ? (
           <div className="skills_table">
-            <div className="sub_header">
+            {/* <div className="sub_header">
               <Select
                 mode="multiple"
                 placeholder="Filter By"
@@ -203,14 +210,14 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
                 }
               />
               <SearchInput />
-            </div>
+            </div> */}
 
           
             <DataTable<Skill>
         tableKey={tableKey}
         columns={columns}
-        data={filtered_skills}
-        getActiveRecord={(record) => setSelectedSkill(record)}
+        data={proposedSkills}
+      
       
       />
         
@@ -239,10 +246,10 @@ const EmployeeSkills = ({ reload, tableKey }: Props) => {
         <DeleteAlert
           alertOpen={showDeleteAlert}
           closeAlert={() => setShowDeleteAlert(false)}
-          promptText={'Are you sure you want to Delete this skill?'}
+          promptText={'Are you sure you want to Reject this skill?'}
           callback={handleDelete}
           loading={false}
-          deleteText={'Delete Skill'}
+          deleteText={'Reject Skill'}
         />
       )}
 
@@ -333,4 +340,4 @@ const Container = styled.div`
     justify-content: flex-end;
   }
 `;
-export default EmployeeSkills;
+export default ProposedSkills;
